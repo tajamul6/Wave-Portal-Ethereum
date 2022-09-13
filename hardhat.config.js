@@ -1,5 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 
+
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
@@ -17,17 +18,25 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
  require("@nomiclabs/hardhat-waffle");
+// Import and configure dotenv
+require("dotenv").config();
 
  module.exports = {
    solidity: "0.8.0",
    networks: {
      rinkeby: {
-       url: "YOUR_QUICKNODE_API_URL",
-       accounts: ["YOUR_PRIVATE_RINKEBY_ACCOUNT_KEY"]
+      chainId: 4,
+       url: process.env.STAGING_QUICKNODE_KEY,
+       accounts: [process.env.PRIVATE_KEY],
+     },
+     mainnet: {
+      chainId: 1,
+      url: process.env.PROD_QUICKNODE_KEY,
+      accounts: [process.env.PRIVATE_KEY],
      },
    },
  };
- 
+
 task("accounts", "Prints the list of accounts", async () => {
   const accounts = await ethers.getSigners();
 
